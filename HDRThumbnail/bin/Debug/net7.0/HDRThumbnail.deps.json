@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "HDRThumbnail/1.0.0": {
+        "dependencies": {
+          "HDRThumbnail.lib": "1.0.0"
+        },
+        "runtime": {
+          "HDRThumbnail.dll": {}
+        }
+      },
+      "HDRThumbnail.lib/1.0.0": {
+        "runtime": {
+          "HDRThumbnail.lib.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HDRThumbnail/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HDRThumbnail.lib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

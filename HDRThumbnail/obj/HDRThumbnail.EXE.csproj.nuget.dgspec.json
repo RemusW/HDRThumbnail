@@ -1,0 +1,118 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/HDRThumbnail.EXE.csproj": {}
+  },
+  "projects": {
+    "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj",
+        "projectName": "HDRThumbnail.lib",
+        "projectPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj",
+        "packagesPath": "/Users/cloremus/.nuget/packages/",
+        "outputPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/cloremus/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/HDRThumbnail.EXE.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/HDRThumbnail.EXE.csproj",
+        "projectName": "HDRThumbnail",
+        "projectPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/HDRThumbnail.EXE.csproj",
+        "packagesPath": "/Users/cloremus/.nuget/packages/",
+        "outputPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/cloremus/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj": {
+                "projectPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

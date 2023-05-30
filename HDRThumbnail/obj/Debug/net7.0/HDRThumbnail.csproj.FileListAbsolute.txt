@@ -1,0 +1,15 @@
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/bin/Debug/net7.0/HDRThumbnail
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/bin/Debug/net7.0/HDRThumbnail.deps.json
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/bin/Debug/net7.0/HDRThumbnail.runtimeconfig.json
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/bin/Debug/net7.0/HDRThumbnail.dll
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/bin/Debug/net7.0/HDRThumbnail.pdb
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.csproj.AssemblyReference.cache
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.GeneratedMSBuildEditorConfig.editorconfig
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.AssemblyInfoInputs.cache
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.AssemblyInfo.cs
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.csproj.CoreCompileInputs.cache
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.dll
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/refint/HDRThumbnail.dll
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.pdb
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/HDRThumbnail.genruntimeconfig.cache
+/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/obj/Debug/net7.0/ref/HDRThumbnail.dll
