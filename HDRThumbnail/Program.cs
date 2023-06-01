@@ -96,21 +96,24 @@ class Program
                         line = streamReader.ReadLine();
                         // Read the resolution line
                         string[] resolution = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        Console.WriteLine("Invalid resolution line." + resolution[0] + " " + resolution[1]);
                         width = int.Parse(resolution[0]);
                         height = int.Parse(resolution[1]);
+                        Console.WriteLine("Invalid resolution line." + width + " " + height);
                         // Allocate pixel data array
                         pixelData = new float[width * height * 3];  // Assuming RGB format
 
                         // Read pixel values
+                        Console.WriteLine("Trying to read pixels");
                         int pixelIndex = 0;
                         while ((line = streamReader.ReadLine()) != null && pixelIndex < pixelData.Length)
                         {
                             string[] pixelValues = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            Console.WriteLine(pixelValues);
                             pixelData[pixelIndex++] = float.Parse(pixelValues[0]);
                             pixelData[pixelIndex++] = float.Parse(pixelValues[1]);
                             pixelData[pixelIndex++] = float.Parse(pixelValues[2]);
                         }
+                        Console.WriteLine("End");
                     }
                 }
             }
@@ -167,9 +170,9 @@ public class HDRParser
                     //}
 
                     string[] resolution = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    Console.WriteLine("Invalid resolution line." + resolution[1] + " " + resolution[3]);
                     width = int.Parse(resolution[1]);
                     height = int.Parse(resolution[3]);
+                    Console.WriteLine("Invalid resolution line." + width + " " + height);
 
                     // Allocate pixel data array
                     pixelData = new float[width * height * 3];  // Assuming RGB format
@@ -178,6 +181,7 @@ public class HDRParser
                     //int pixelIndex = 0;
                     //while ((line = streamReader.ReadLine()) != null && pixelIndex < pixelData.Length)
                     //{
+                    //    Console.WriteLine(line);
                     //    string[] pixelValues = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     //    for (int i = 0; i < pixelValues.Length; i++)
                     //    {
@@ -192,7 +196,8 @@ public class HDRParser
                     //        }
                     //    }
                     //}
-                    byte[] pixelD = RgbeDecoder.DecodeRgbe(rgbeData, width, height);
+                    byte[] rgbeByte = ConvertStringToBytes(rgbeData);
+                    pixelData = HDRParser.DecodeRgbE(rgbeByte, width, height);
                 }
             }
         }
@@ -204,6 +209,101 @@ public class HDRParser
 
         return pixelData;
     }
+
+    private static byte[] ConvertStringToBytes(string rgbeData)
+    {
+        byte[] rgbeBytes = new byte[rgbeData.Length / 2];
+
+        int byteIndex = 0;
+        for (int i = 0; i < rgbeData.Length; i += 2)
+        {
+            string byteHex = rgbeData.Substring(i, 2);
+
+            if (byte.TryParse(byteHex, System.Globalization.NumberStyles.HexNumber, null, out byte rgbeByte))
+            {
+                rgbeBytes[byteIndex++] = rgbeByte;
+            }
+            else
+            {
+                // Handle non-hexadecimal characters
+                // You can choose to skip, replace, or handle them in a way that fits your requirements
+                // Here, we set the byte value to 0 as a placeholder
+                rgbeBytes[byteIndex++] = 0;
+            }
+        }
+
+        return rgbeBytes;
+    }
+
+    private static float[] DecodeRgbE(byte[] rgbeData, int width, int height)
+    {
+        int numPixels = width * height;
+        float[] imageData = new float[numPixels * 3]; // RGB format
+
+        int dataIndex = 0;
+        int pixelIndex = 0;
+
+        for (int i = 0; i < numPixels; i++)
+        {
+            byte rgbeIndicator = rgbeData[dataIndex++];
+            byte rgbeValue = rgbeData[dataIndex++];
+
+            if (rgbeIndicator == 0x02 && rgbeValue == 0x02)
+            {
+                // New RLE scanline encoding
+                int runLength = BitConverter.ToUInt16(rgbeData, dataIndex);
+                dataIndex += 2;
+
+                if (runLength == 0)
+                {
+                    throw new InvalidDataException("Invalid RLE scanline encoding.");
+                }
+
+                byte red = rgbeData[dataIndex++];
+                byte green = rgbeData[dataIndex++];
+                byte blue = rgbeData[dataIndex++];
+
+                for (int j = 0; j < runLength; j++)
+                {
+                    imageData[pixelIndex++] = red / 255.0f;
+                    imageData[pixelIndex++] = green / 255.0f;
+                    imageData[pixelIndex++] = blue / 255.0f;
+                }
+            }
+            else if (rgbeIndicator == 0x01 && rgbeValue == 0x02)
+            {
+                // Old RLE scanline encoding
+                int runLength = rgbeData[dataIndex++];
+
+                if (runLength == 0)
+                {
+                    throw new InvalidDataException("Invalid RLE scanline encoding.");
+                }
+
+                byte red = rgbeData[dataIndex++];
+                byte green = rgbeData[dataIndex++];
+                byte blue = rgbeData[dataIndex++];
+
+                for (int j = 0; j < runLength; j++)
+                {
+                    imageData[pixelIndex++] = red / 255.0f;
+                    imageData[pixelIndex++] = green / 255.0f;
+                    imageData[pixelIndex++] = blue / 255.0f;
+                }
+            }
+            else
+            {
+                // Individual pixel encoding
+                float exponent = (float)Math.Pow(2, rgbeValue - 128);
+                imageData[pixelIndex++] = rgbeData[dataIndex++] / 255.0f * exponent;
+                imageData[pixelIndex++] = rgbeData[dataIndex++] / 255.0f * exponent;
+                imageData[pixelIndex++] = rgbeData[dataIndex++] / 255.0f * exponent;
+            }
+        }
+
+        return imageData;
+    }
+
 }
 
 
@@ -212,7 +312,7 @@ public class RgbeDecoder
     public static byte[] DecodeRgbe(string rgbeString, int width, int height)
     {
         byte[] rgbeData  = System.Text.Encoding.ASCII.GetBytes(rgbeString);
-        Console.WriteLine(rgbeString);
+        Console.WriteLine(rgbeData);
 
         byte[] imageData = new byte[width * height * 3]; // Assuming RGB format
 
