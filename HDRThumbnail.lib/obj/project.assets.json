@@ -14,7 +14,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj",
-      "projectName": "HDRThumbnail",
+      "projectName": "HDRThumbnail.lib",
       "projectPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/HDRThumbnail.csproj",
       "packagesPath": "/Users/cloremus/.nuget/packages/",
       "outputPath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail.lib/obj/",
