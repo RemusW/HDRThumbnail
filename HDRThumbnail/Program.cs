@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-
-
 using HDRThumbnail;
 
 class Program
@@ -144,6 +142,7 @@ public class HDRParser
                 using (var streamReader = new StreamReader(fileStream))
                 {
                     Console.WriteLine("Starting to read lines");
+                    Console.WriteLine("File position: " + fileStream.Position);
                     // Read and validate the file format identifier
                     string format = streamReader.ReadLine();
                     if (format != "#?RADIANCE" && format != "#?RGBE")
@@ -151,6 +150,7 @@ public class HDRParser
                         Console.WriteLine("Invalid file format.");
                         return null;
                     }
+                    Console.WriteLine("File position: " + fileStream.Position);
 
                     // Skip comments and empty lines
                     string line;
@@ -159,45 +159,39 @@ public class HDRParser
                         line = streamReader.ReadLine()?.Trim();
                     } while (!string.IsNullOrEmpty(line) && line.StartsWith("#"));
 
-                    line = streamReader.ReadLine();
-                    line = streamReader.ReadLine();
-                    //Read the resolution line
-                    //string[] resolution = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    //if (resolution.Length != 4 || !int.TryParse(resolution[3], out width) || !int.TryParse(resolution[1], out height))
-                    //{
-                    //    Console.WriteLine("Invalid resolution line." + width + " " + height);
-                    //    return null;
-                    //}
+					Console.WriteLine("File position: " + streamReader.BaseStream.Position);
 
+                    line = streamReader.ReadLine();
+                    line = streamReader.ReadLine();
+
+					Console.WriteLine("File position: " + streamReader.BaseStream.Position);
+                    //Read the resolution line
                     string[] resolution = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    width = int.Parse(resolution[1]);
-                    height = int.Parse(resolution[3]);
-                    Console.WriteLine("Invalid resolution line." + width + " " + height);
+                    if (resolution.Length != 4 || !int.TryParse(resolution[3], out width) || !int.TryParse(resolution[1], out height))
+                    {
+                        Console.WriteLine("Invalid resolution line." + width + " " + height);
+                        return null;
+                    }
+                    Console.WriteLine(width + " " + height);
 
                     // Allocate pixel data array
                     pixelData = new float[width * height * 3];  // Assuming RGB format
-                    string rgbeData = streamReader.ReadToEnd();
+
                     // Read pixel values
-                    //int pixelIndex = 0;
-                    //while ((line = streamReader.ReadLine()) != null && pixelIndex < pixelData.Length)
-                    //{
-                    //    Console.WriteLine(line);
-                    //    string[] pixelValues = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    //    for (int i = 0; i < pixelValues.Length; i++)
-                    //    {
-                    //        if (float.TryParse(pixelValues[i], out float pixel))
-                    //        {
-                    //            pixelData[pixelIndex++] = pixel;
-                    //        }
-                    //        else
-                    //        {
-                    //            Console.WriteLine("Invalid pixel value.");
-                    //            return null;
-                    //        }
-                    //    }
-                    //}
-                    byte[] rgbeByte = ConvertStringToBytes(rgbeData);
-                    pixelData = HDRParser.DecodeRgbE(rgbeByte, width, height);
+                    // Read the binary data portion
+                    line = streamReader.ReadLine();
+                    byte[] binaryData = new byte[fileStream.Length - fileStream.Position];
+                    Console.WriteLine(streamReader.BaseStream.Position);
+                    //string rgbeData = streamReader.ReadToEnd();
+                    fileStream.Read(binaryData, 0, binaryData.Length);
+                    //byte[] rgbeByte = ConvertStringToBytes(rgbeData);
+                    //Console.WriteLine(string.Join(", ", binaryData));
+
+                    foreach (byte b in binaryData)
+                    {
+					    Console.Write($"{b:X2} ");
+                    }
+                    pixelData = HDRParser.decodeRGBE2(binaryData, width, height);
                 }
             }
         }
@@ -304,6 +298,59 @@ public class HDRParser
         return imageData;
     }
 
+    private static float[] decodeRGBE2(byte[] pixelData, int width, int height) {
+        // Convert the pixel data to float RGB format
+        int numPixels = width * height;
+        float[] floatRGB = new float[3 * numPixels];
+
+        int dataIndex = 0;
+        int pixelIndex = 0;
+
+        while (pixelIndex < numPixels)
+        {
+            byte controlByte = pixelData[dataIndex++];
+            bool isRLE = (controlByte & 0x80) != 0;
+            int count = controlByte & 0x7F;
+
+            if (isRLE)
+            {
+                byte r = pixelData[dataIndex++];
+                byte g = pixelData[dataIndex++];
+                byte b = pixelData[dataIndex++];
+                byte e = pixelData[dataIndex++];
+
+                float maxComponent = Math.Max(Math.Max(r, g), b);
+                float scale = (float)Math.Pow(2, e - 128) / maxComponent;
+
+                for (int i = 0; i < count; i++)
+                {
+                    floatRGB[pixelIndex * 3] = r * scale;
+                    floatRGB[pixelIndex * 3 + 1] = g * scale;
+                    floatRGB[pixelIndex * 3 + 2] = b * scale;
+                    pixelIndex++;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    byte r = pixelData[dataIndex++];
+                    byte g = pixelData[dataIndex++];
+                    byte b = pixelData[dataIndex++];
+                    byte e = pixelData[dataIndex++];
+
+                    float maxComponent = Math.Max(Math.Max(r, g), b);
+                    float scale = (float)Math.Pow(2, e - 128) / maxComponent;
+
+                    floatRGB[pixelIndex * 3] = r * scale;
+                    floatRGB[pixelIndex * 3 + 1] = g * scale;
+                    floatRGB[pixelIndex * 3 + 2] = b * scale;
+                    pixelIndex++;
+                }
+            }
+        }
+        return floatRGB;
+    }
 }
 
 
