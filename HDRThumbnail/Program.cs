@@ -13,8 +13,9 @@ class Program
 
         int width, height;
         float[] pixelData = HDRParser.ParseHDR(filepath, out width, out height);
+        Console.WriteLine(pixelData.ToString());
         //Access individual pixel values from the pixel data
-        int pixelIndex = (10 * width + 10) * 3;  // Replace x and y with desired pixel coordinates
+        int pixelIndex = (1 * width + 10) * 3;  // Replace x and y with desired pixel coordinates
         float red = pixelData[pixelIndex];
         float green = pixelData[pixelIndex + 1];
         float blue = pixelData[pixelIndex + 2];
@@ -142,7 +143,6 @@ public class HDRParser
                 using (var streamReader = new StreamReader(fileStream))
                 {
                     Console.WriteLine("Starting to read lines");
-                    Console.WriteLine("File position: " + fileStream.Position);
                     // Read and validate the file format identifier
                     string format = streamReader.ReadLine();
                     if (format != "#?RADIANCE" && format != "#?RGBE")
@@ -150,7 +150,6 @@ public class HDRParser
                         Console.WriteLine("Invalid file format.");
                         return null;
                     }
-                    Console.WriteLine("File position: " + fileStream.Position);
 
                     // Skip comments and empty lines
                     string line;
@@ -159,12 +158,10 @@ public class HDRParser
                         line = streamReader.ReadLine()?.Trim();
                     } while (!string.IsNullOrEmpty(line) && line.StartsWith("#"));
 
-					Console.WriteLine("File position: " + streamReader.BaseStream.Position);
 
                     line = streamReader.ReadLine();
                     line = streamReader.ReadLine();
 
-					Console.WriteLine("File position: " + streamReader.BaseStream.Position);
                     //Read the resolution line
                     string[] resolution = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     if (resolution.Length != 4 || !int.TryParse(resolution[3], out width) || !int.TryParse(resolution[1], out height))
@@ -179,18 +176,13 @@ public class HDRParser
 
                     // Read pixel values
                     // Read the binary data portion
-                    line = streamReader.ReadLine();
+                    //line = streamReader.ReadLine();
+					Console.WriteLine("File position: " + streamReader.BaseStream.Position);
                     byte[] binaryData = new byte[fileStream.Length - fileStream.Position];
-                    Console.WriteLine(streamReader.BaseStream.Position);
                     //string rgbeData = streamReader.ReadToEnd();
                     fileStream.Read(binaryData, 0, binaryData.Length);
                     //byte[] rgbeByte = ConvertStringToBytes(rgbeData);
-                    //Console.WriteLine(string.Join(", ", binaryData));
 
-                    foreach (byte b in binaryData)
-                    {
-					    Console.Write($"{b:X2} ");
-                    }
                     pixelData = HDRParser.decodeRGBE2(binaryData, width, height);
                 }
             }
@@ -308,10 +300,11 @@ public class HDRParser
 
         while (pixelIndex < numPixels)
         {
+            Console.WriteLine(dataIndex + " " + pixelIndex + "<" + numPixels);
             byte controlByte = pixelData[dataIndex++];
             bool isRLE = (controlByte & 0x80) != 0;
             int count = controlByte & 0x7F;
-
+            Console.WriteLine(isRLE + " " + count);
             if (isRLE)
             {
                 byte r = pixelData[dataIndex++];
@@ -350,6 +343,10 @@ public class HDRParser
             }
         }
         return floatRGB;
+    }
+    
+    private static void printrgb(byte r, byte g, byte b, byte e, bool isRLE) {
+        Console.WriteLine(r + " " + g + " " + b + " " + e + " " + isRLE); 
     }
 }
 
