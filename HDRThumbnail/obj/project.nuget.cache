@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "OvbXLwXsJNkVyl+KHl+YtFUNi3CViGynvI/sPOocbU7gCYcMz3JmWl7AcETyXYiJr0tFXAj945ZWDioN7SBO9w==",
+  "dgSpecHash": "QUGil2xYRDq3YXI+gC7dyxS6FeZRukaAvkcw5hWVH6J7B8HVVE/Bhr9oWId680RuOg10GyDfk7Imex90jC9LVw==",
   "success": true,
-  "projectFilePath": "/Users/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/HDRThumbnail.EXE.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail\\HDRThumbnail.EXE.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rwong\\.nuget\\packages\\opencvsharp4\\4.7.0.20230115\\opencvsharp4.4.7.0.20230115.nupkg.sha512",
+    "C:\\Users\\rwong\\.nuget\\packages\\opencvsharp4.runtime.win\\4.7.0.20230115\\opencvsharp4.runtime.win.4.7.0.20230115.nupkg.sha512",
+    "C:\\Users\\rwong\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\rwong\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
