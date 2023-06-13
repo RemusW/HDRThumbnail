@@ -11,9 +11,8 @@ namespace HDRThumbnail
     {
         public static void rwHDR(string filePath)
         {
-            Console.WriteLine(filePath);
             Mat image = Cv2.ImRead(filePath, ImreadModes.AnyColor | ImreadModes.AnyDepth);
-            Cv2.ImShow("new", image);
+            Cv2.ImShow("first read", image);
             // Check if the image was successfully loaded
             if (image.Empty())
             {
@@ -27,8 +26,10 @@ namespace HDRThumbnail
                 image.ConvertTo(ldrImage, MatType.CV_8UC3, 255.0);
 
                 // Adjust the brightness by multiplying pixel values by a factor
-                double brightnessFactor = 10.0; // Adjust this value as needed
-                ldrImage *= brightnessFactor;
+                //double brightnessFactor = 10.0; // Adjust this value as needed
+                //ldrImage *= brightnessFactor;
+
+
 
                 // Save the LDR image as JPG
                 string outputFilePath = "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail\\output.png";
@@ -40,8 +41,8 @@ namespace HDRThumbnail
                 int dataSize = rows * cols * channels;
                 Console.WriteLine("{0} {1} {2}", rows, cols, channels);
 
-                byte[] imageData = new byte[dataSize];
-                Marshal.Copy(ldrImage.Data, imageData, 0, dataSize);
+                byte[] byteImageData = new byte[dataSize];
+                Marshal.Copy(ldrImage.Data, byteImageData, 0, dataSize);
 
                 // Convert the byte array to a float array
 
@@ -55,67 +56,81 @@ namespace HDRThumbnail
                     {
                         for (int ch = 0; ch < channels; ch++)
                         {
-                            imageArray[r, c, ch] = imageData[index++];
+                            imageArray[r, c, ch] = byteImageData[index++];
                         }
                     }
                 }
 
                 // Assign the multidimensional array to the Mat image
                 Mat newim = new Mat(rows, cols, MatType.CV_8UC3, imageArray);
-                Mat perspmat = createThumbnail(imageArray, newim);
+                Cv2.ImShow("byte transtered", newim);
+                //Mat perspmat = createThumbnail(imageArray, newim);
                 //newim.SetArray(imageArray.);
                 //newim.SetTo(1000);
-                thumbnail(newim);
-                Cv2.ImShow("newim", newim);
-                Cv2.ImShow("output", perspmat);
-                Cv2.ImWrite(outputFilePath, createThumbnail(imageArray, perspmat));
+                thumbnail(ldrImage);
+
+                //Cv2.ImShow("output", perspmat);
+                //Cv2.ImWrite(outputFilePath, createThumbnail(imageArray, perspmat));
                 Cv2.WaitKey(0);
 
                 Console.WriteLine("Image saved successfully.");
             }
+
+            Cv2.WaitKey(0);
         }
 
-        public static void thumbnail (Mat hdr)
-        {
-            // Load the Equirectangular image
-            Mat equirectangularImage = hdr;
 
-            // Define perspective projection parameters
+        public static void thumbnail (Mat equirectangularImage)
+        {
             int perspectiveWidth = 1024;
             int perspectiveHeight = 512;
-            double fieldOfView = 100; // in degrees
+            float fieldOfView = 90f;
+            float cameraYaw = 0;
+            float cameraPitch = 0;
+            float cameraRoll = 0;
+            // Create an empty perspective image
+            Mat perspectiveImage = new Mat(perspectiveHeight, perspectiveWidth, MatType.CV_8UC3);
 
-            // Create blank image for perspective projection
-            Mat perspectiveImage = new Mat(perspectiveHeight, perspectiveWidth, hdr.Type());
+            // Convert field of view to radians
+            float fovRadians = fieldOfView * (float)Math.PI / 180.0f;
 
-            // Calculate projection parameters
-            double aspectRatio = (double)perspectiveWidth / perspectiveHeight;
-            double fovRadians = Math.PI * fieldOfView / 180.0;
-            double focalLength = perspectiveWidth / (2 * Math.Tan(fovRadians / 2));
-
-            // Perform perspective projection
+            // Iterate over each pixel in the perspective image
             for (int y = 0; y < perspectiveHeight; y++)
             {
                 for (int x = 0; x < perspectiveWidth; x++)
                 {
-                    // Calculate normalized 3D Cartesian coordinates from pixel coordinates
-                    double normalizedX = (2.0 * x / perspectiveImage.Cols) - 1.0;
-                    double normalizedY = 1.0 - (2.0 * y / perspectiveImage.Rows);
-                    double normalizedZ = 1.0;  // Assuming the perspective image is facing towards the sphere
+                    // Convert pixel coordinates to normalized device coordinates (NDC)
+                    float ndcX = 2.0f * (x / (float)perspectiveWidth) - 1.0f;
+                    float ndcY = 2.0f * (y / (float)perspectiveHeight) - 1.0f;
 
-                    // Convert normalized 3D Cartesian coordinates to spherical coordinates
-                    double radius = Math.Sqrt(normalizedX * normalizedX + normalizedY * normalizedY + normalizedZ * normalizedZ);
-                    double latitude = Math.Asin(normalizedY / radius);
-                    double longitude = Math.Atan2(normalizedX, normalizedZ);
+                    // Apply field of view angle to the NDC coordinates
+                    float fovCorrectedX = ndcX * 1;
+                    float fovCorrectedY = ndcY * 1;
 
-                    // Map 3D coordinates to Equirectangular image
-                    int equirectangularX = (int)(((longitude + Math.PI) / (2 * Math.PI)) * equirectangularImage.Width);
-                    int equirectangularY = (int)(((Math.PI / 2) - latitude) / Math.PI * equirectangularImage.Height);
+                    // Convert corrected NDC to spherical coordinates
+                    float elevation = (float)Math.Asin(fovCorrectedY);
+                    float azimuth = (float)Math.Atan2(fovCorrectedX, Math.Sqrt(1.0f - fovCorrectedY * fovCorrectedY));
 
-                    // Sample pixel from Equirectangular image
+                    // Convert spherical coordinates to Cartesian coordinates
+                    float xCartesian = (float)(Math.Cos(elevation) * Math.Sin(azimuth));
+                    float yCartesian = (float)Math.Sin(elevation);
+                    float zCartesian = (float)(Math.Cos(elevation) * Math.Cos(azimuth));
+
+                    // Apply camera rotations
+                    //RotatePoint(ref xCartesian, ref yCartesian, ref zCartesian, cameraYaw, cameraPitch, cameraRoll);
+
+                    // Convert Cartesian coordinates to longitude and latitude angles
+                    float longitude = (float)Math.Atan2(xCartesian, zCartesian);
+                    float latitude = (float)Math.Asin(yCartesian);
+
+                    // Map longitude and latitude to equirectangular image coordinates
+                    int equirectangularX = (int)((longitude + Math.PI) / (2.0f * Math.PI) * equirectangularImage.Width);
+                    int equirectangularY = (int)((latitude + Math.PI / 2.0f) / Math.PI * equirectangularImage.Height);
+
+                    // Retrieve pixel value from equirectangular image
                     Vec3b pixel = equirectangularImage.Get<Vec3b>(equirectangularY, equirectangularX);
 
-                    // Assign pixel to corresponding pixel in perspective projection image
+                    // Assign pixel value to perspective image
                     perspectiveImage.Set<Vec3b>(y, x, pixel);
                 }
             }
@@ -124,7 +139,63 @@ namespace HDRThumbnail
             //perspectiveImage.SaveImage("perspective.jpg");
             Cv2.ImShow("perspective", perspectiveImage);
         }
-    
+
+        private static void RotatePoint(ref float x, ref float y, ref float z, float yaw, float pitch, float roll)
+        {
+            // Convert Euler angles to radians
+            float yawRadians = yaw * (float)Math.PI / 180.0f;
+            float pitchRadians = pitch * (float)Math.PI / 180.0f;
+            float rollRadians = roll * (float)Math.PI / 180.0f;
+
+            // Apply yaw rotation
+            float cosYaw = (float)Math.Cos(yawRadians);
+            float sinYaw = (float)Math.Sin(yawRadians);
+            float tempX = x;
+            x = cosYaw * tempX - sinYaw * z;
+            z = sinYaw * tempX + cosYaw * z;
+
+            // Apply pitch rotation
+            float cosPitch = (float)Math.Cos(pitchRadians);
+            float sinPitch = (float)Math.Sin(pitchRadians);
+            float tempY = y;
+            y = cosPitch * tempY - sinPitch * z;
+            z = sinPitch * tempY + cosPitch * z;
+
+            // Apply roll rotation
+            float cosRoll = (float)Math.Cos(rollRadians);
+            float sinRoll = (float)Math.Sin(rollRadians);
+            tempX = x;
+            x = cosRoll * tempX - sinRoll * y;
+            y = sinRoll * tempX + cosRoll * y;
+        }
+
+        public static void perspMatThumbnail (Mat hdr)
+        {
+            Mat equirectangularImage = hdr;
+            double fov = 60.0; // Field of view in degrees
+            double aspectRatio = 1.0; // Width-to-height aspect ratio of the perspective image
+            int perspectiveWidth = 1024; // Width of the perspective image
+            int perspectiveHeight = 512; // Height of the perspective image
+
+            double yaw = 0.0; // Yaw angle in degrees (left-right rotation)
+            double pitch = 0.0; // Pitch angle in degrees (up-down rotation)
+            double roll = 0.0; // Roll angle in degrees (tilt rotation)
+            double distance = 1.0; // Distance from the center of the equirectangular image
+
+            Mat perspectiveTransform = Cv2.GetPerspectiveTransform(
+                new Point2f[] { new Point2f(0, 0), new Point2f(perspectiveWidth, 0),
+                                new Point2f(perspectiveWidth, perspectiveHeight), new Point2f(0, perspectiveHeight) },
+                new Point2f[] { new Point2f(perspectiveWidth / 2.0f, perspectiveHeight / 2.0f),
+                                new Point2f(perspectiveWidth / 2.0f, perspectiveHeight / 2.0f),
+                                new Point2f(perspectiveWidth / 2.0f, perspectiveHeight / 2.0f),
+                                new Point2f(perspectiveWidth / 2.0f, perspectiveHeight / 2.0f) });
+
+            Mat perspectiveImage = new Mat();
+            Cv2.WarpPerspective(equirectangularImage, perspectiveImage, perspectiveTransform, new OpenCvSharp.Size(perspectiveWidth, perspectiveHeight));
+
+            Cv2.ImShow("perspective", perspectiveImage);
+
+        }
 
         public static Mat createThumbnail(byte[,,] pixelData, Mat hdrImage)
         {

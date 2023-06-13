@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "f/lNRkyiEt4SCZxycg5xvz0DnNaGcQYMkkEKYaiQjnn1QwvoVbt5NfzTIM+cr0fghUntCzACB8KXNE7LY7LN7A==",
+  "dgSpecHash": "qDBMwKCLu4DkKbs+q8r/jNd4/ve5TIQQCGIKiTKqbqyQFw9m2hr9KPdG5jNShqlvnHIa5D6QGdUlIC5wOGIhEw==",
   "success": true,
   "projectFilePath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\rwong\\.nuget\\packages\\devilsharp\\0.2.20\\devilsharp.0.2.20.nupkg.sha512",
+    "C:\\Users\\rwong\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512",
     "C:\\Users\\rwong\\.nuget\\packages\\opencvsharp4\\4.7.0.20230115\\opencvsharp4.4.7.0.20230115.nupkg.sha512",
     "C:\\Users\\rwong\\.nuget\\packages\\opencvsharp4.runtime.win\\4.7.0.20230115\\opencvsharp4.runtime.win.4.7.0.20230115.nupkg.sha512",
     "C:\\Users\\rwong\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",

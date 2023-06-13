@@ -8,12 +8,14 @@ class Program
     {
         string hdri = "v2_little_paris_eiffel_tower_1k.hdr";
         //string hdri = "industrial_sunset_puresky_1k.hdr";
-        string hdripath = "/cloremus/Documents/clo/HDRThumbnail/HDRThumbnail/v2_little_paris_eiffel_tower_1k.hdr";
+        //string currentDirectory = "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail\v2_little_paris_eiffel_tower_1k.hdr";
         string currentDirectory = Directory.GetCurrentDirectory();
         string filepath = Path.Combine(currentDirectory, hdri);
+        Console.WriteLine(filepath);
+
 
         HDRThumbnail.HDRParser.rwHDR(filepath);
-
+        //HDRThumbnail.DevIL.loadHDR(filepath);
         int width, height;
         //float[] pixelData = HDRThumbnail.HDRParser.ParseHDR(filepath, out width, out height);
         //Console.WriteLine(pixelData.ToString());
