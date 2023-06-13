@@ -6,7 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        string hdri = "v2_little_paris_eiffel_tower_1k.hdr";
+        string hdri = "little_paris_eiffel_tower_4k.hdr";
         //string hdri = "industrial_sunset_puresky_1k.hdr";
         //string currentDirectory = "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail\v2_little_paris_eiffel_tower_1k.hdr";
         string currentDirectory = Directory.GetCurrentDirectory();

@@ -26,8 +26,8 @@ namespace HDRThumbnail
                 image.ConvertTo(ldrImage, MatType.CV_8UC3, 255.0);
 
                 // Adjust the brightness by multiplying pixel values by a factor
-                //double brightnessFactor = 10.0; // Adjust this value as needed
-                //ldrImage *= brightnessFactor;
+                double brightnessFactor = 5.0; // Adjust this value as needed
+                ldrImage *= brightnessFactor;
 
 
 
@@ -84,7 +84,8 @@ namespace HDRThumbnail
         {
             int perspectiveWidth = 1024;
             int perspectiveHeight = 512;
-            float fieldOfView = 90f;
+            float fieldOfView = 150f;
+            float vFieldOfView = fieldOfView / (perspectiveWidth/perspectiveHeight);
             float cameraYaw = 0;
             float cameraPitch = 0;
             float cameraRoll = 0;
@@ -92,7 +93,8 @@ namespace HDRThumbnail
             Mat perspectiveImage = new Mat(perspectiveHeight, perspectiveWidth, MatType.CV_8UC3);
 
             // Convert field of view to radians
-            float fovRadians = fieldOfView * (float)Math.PI / 180.0f;
+            float hFovRadians = fieldOfView * (float)Math.PI / 180.0f;
+            float vFovRadians = vFieldOfView * (float)Math.PI / 180.0f;
 
             // Iterate over each pixel in the perspective image
             for (int y = 0; y < perspectiveHeight; y++)
@@ -104,12 +106,12 @@ namespace HDRThumbnail
                     float ndcY = 2.0f * (y / (float)perspectiveHeight) - 1.0f;
 
                     // Apply field of view angle to the NDC coordinates
-                    float fovCorrectedX = ndcX * 1;
-                    float fovCorrectedY = ndcY * 1;
+                    float fovCorrectedX = ndcX * hFovRadians / 2;
+                    float fovCorrectedY = ndcY * vFovRadians / 2;
 
                     // Convert corrected NDC to spherical coordinates
                     float elevation = (float)Math.Asin(fovCorrectedY);
-                    float azimuth = (float)Math.Atan2(fovCorrectedX, Math.Sqrt(1.0f - fovCorrectedY * fovCorrectedY));
+                    float azimuth = (float)Math.Atan2(fovCorrectedX, 1);
 
                     // Convert spherical coordinates to Cartesian coordinates
                     float xCartesian = (float)(Math.Cos(elevation) * Math.Sin(azimuth));
@@ -117,7 +119,7 @@ namespace HDRThumbnail
                     float zCartesian = (float)(Math.Cos(elevation) * Math.Cos(azimuth));
 
                     // Apply camera rotations
-                    //RotatePoint(ref xCartesian, ref yCartesian, ref zCartesian, cameraYaw, cameraPitch, cameraRoll);
+                    RotatePoint(ref xCartesian, ref yCartesian, ref zCartesian, cameraYaw, cameraPitch, cameraRoll);
 
                     // Convert Cartesian coordinates to longitude and latitude angles
                     float longitude = (float)Math.Atan2(xCartesian, zCartesian);
