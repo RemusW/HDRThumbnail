@@ -7,7 +7,7 @@ using DevILSharp;
 
 namespace HDRThumbnail
 {
-    public class DevIL
+    public class DevILTest
     {
         public static void loadHDR(string filepath)
         {

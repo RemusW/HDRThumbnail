@@ -44,10 +44,6 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "DevILSharp": {
-              "target": "Package",
-              "version": "[0.2.20, )"
-            },
             "OpenCvSharp4": {
               "target": "Package",
               "version": "[4.7.0.20230115, )"
@@ -120,6 +116,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "DevILSharp": {
+              "target": "Package",
+              "version": "[0.2.20, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

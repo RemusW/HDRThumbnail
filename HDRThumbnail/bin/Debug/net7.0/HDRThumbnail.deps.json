@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "HDRThumbnail/1.0.0": {
         "dependencies": {
+          "DevILSharp": "0.2.20",
           "HDRThumbnail.lib": "1.0.0",
           "HDRThumbnail.lib.Reference": "1.0.0.0"
         },
@@ -115,7 +116,6 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
       "HDRThumbnail.lib/1.0.0": {
         "dependencies": {
-          "DevILSharp": "0.2.20",
           "OpenCvSharp4": "4.7.0.20230115",
           "OpenCvSharp4.runtime.win": "4.7.0.20230115"
         },

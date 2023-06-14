@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevILSharp" Version="0.2.20" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HDRThumbnail.lib\HDRThumbnail.csproj" />
   </ItemGroup>
   <ItemGroup>
