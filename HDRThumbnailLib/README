@@ -7,3 +7,4 @@ using HDRThumbnail;
 // If only one width or one height parameter is passed, the unassigned dimension will duplicate the passed-in value.
 HDRThumbnail.HDRParser.createThumbnail("../input.hdr, "../output.hdr, 1024, 512, 100);
 ```
+
