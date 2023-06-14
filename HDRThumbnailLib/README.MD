@@ -8,3 +8,5 @@ using HDRThumbnail;
 HDRThumbnail.HDRParser.createThumbnail("../input.hdr, "../output.hdr, 1024, 512, 100);
 ```
 
+# Nuget Package
+https://www.nuget.org/packages/HDRThumbnailLib/1.0.0
