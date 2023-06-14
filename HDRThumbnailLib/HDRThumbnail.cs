@@ -22,7 +22,6 @@ namespace HDRThumbnail
             {
                 horizontalFOV = 100;
             }
-            Console.WriteLine("{0} {1}", width, height);
 
             Mat image = Cv2.ImRead(filePath, ImreadModes.AnyColor | ImreadModes.AnyDepth);
 
@@ -57,8 +56,6 @@ namespace HDRThumbnail
 
                 Console.WriteLine("Image saved successfully.");
             }
-
-            Cv2.WaitKey(0);
         }
 
 
