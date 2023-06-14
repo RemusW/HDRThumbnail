@@ -17,7 +17,7 @@ class Program
         Console.WriteLine(filepath);
 
 
-        HDRThumbnail.HDRParser.rwHDR(filepath, outputPath, 1024, 512, 100);
+        HDRThumbnail.HDRParser.createThumbnail(filepath, outputPath, 1024, 512, 100);
         //HDRThumbnail.DevILTest.loadHDR(filepath);
         int width, height;
         //float[] pixelData = HDRThumbnail.HDRParser.ParseHDR(filepath, out width, out height);

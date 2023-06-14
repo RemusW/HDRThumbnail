@@ -12,7 +12,7 @@ namespace HDRThumbnail
 {
     public class HDRParser
     {
-        public static void rwHDR(string filePath, string outputPath, [Optional] int width, [Optional] int height, int horizontalFOV = 100)
+        public static void createThumbnail(string filePath, string outputPath, [Optional] int width, [Optional] int height, int horizontalFOV = 100)
         {
             if (width == 0 && height == 0)
             {
@@ -56,11 +56,10 @@ namespace HDRThumbnail
                     }
                 }
 
-                Mat thumbnail = createThumbnail(ldrImage, width, height, horizontalFOV);
-
-                // Save perspective projection image
+                // Create and save perspective projection image
+                Mat thumbnail = hdrToperspective(ldrImage, width, height, horizontalFOV);
                 thumbnail.SaveImage(outputPath);
-                Cv2.ImShow("perspective", thumbnail);
+                //Cv2.ImShow("perspective", thumbnail);
 
                 Console.WriteLine("Image saved successfully.");
             }
@@ -69,7 +68,7 @@ namespace HDRThumbnail
         }
 
 
-        public static Mat createThumbnail(Mat equirectangularImage, int width, int height, int horizontalFOV)
+        public static Mat hdrToperspective(Mat equirectangularImage, int width, int height, int horizontalFOV)
         {
             int perspectiveWidth = width;
             int perspectiveHeight = height;
