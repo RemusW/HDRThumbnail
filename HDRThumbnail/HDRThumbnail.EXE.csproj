@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HDRThumbnail.lib\HDRThumbnail.csproj" />
+    <ProjectReference Include="..\HDRThumbnailLib\HDRThumbnailLib.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="little_paris_eiffel_tower_1k.hdr">

@@ -138,18 +138,18 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "HDRThumbnail.lib/1.0.0": {
+      "HDRThumbnailLib/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "OpenCvSharp4": "4.7.0.20230115",
           "OpenCvSharp4.runtime.win": "4.7.0.20230115"
         },
         "compile": {
-          "bin/placeholder/HDRThumbnail.lib.dll": {}
+          "bin/placeholder/HDRThumbnailLib.dll": {}
         },
         "runtime": {
-          "bin/placeholder/HDRThumbnail.lib.dll": {}
+          "bin/placeholder/HDRThumbnailLib.dll": {}
         }
       }
     }
@@ -284,16 +284,16 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "HDRThumbnail.lib/1.0.0": {
+    "HDRThumbnailLib/1.0.0": {
       "type": "project",
-      "path": "../HDRThumbnail.lib/HDRThumbnail.csproj",
-      "msbuildProject": "../HDRThumbnail.lib/HDRThumbnail.csproj"
+      "path": "../HDRThumbnailLib/HDRThumbnailLib.csproj",
+      "msbuildProject": "../HDRThumbnailLib/HDRThumbnailLib.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "DevILSharp >= 0.2.20",
-      "HDRThumbnail.lib >= 1.0.0"
+      "HDRThumbnailLib >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -328,8 +328,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj": {
-              "projectPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj"
+            "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj": {
+              "projectPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj"
             }
           }
         }

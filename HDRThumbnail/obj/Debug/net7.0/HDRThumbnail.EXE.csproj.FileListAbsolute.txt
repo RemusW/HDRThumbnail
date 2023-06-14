@@ -23,8 +23,6 @@ D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnail.dep
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnail.runtimeconfig.json
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnail.dll
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnail.pdb
-D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnail.lib.dll
-D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnail.lib.pdb
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\obj\Debug\net7.0\HDRThumbnail.EXE.csproj.AssemblyReference.cache
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\obj\Debug\net7.0\HDRThumbnail.EXE.GeneratedMSBuildEditorConfig.editorconfig
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\obj\Debug\net7.0\HDRThumbnail.EXE.AssemblyInfoInputs.cache
@@ -56,3 +54,5 @@ D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\ru\FSharp.Core.r
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\tr\FSharp.Core.resources.dll
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\zh-Hans\FSharp.Core.resources.dll
 D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\zh-Hant\FSharp.Core.resources.dll
+D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnailLib.dll
+D:\Code workshop\clo\HDRThumbnail\HDRThumbnail\bin\Debug\net7.0\HDRThumbnailLib.pdb

@@ -4,14 +4,14 @@
     "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail\\HDRThumbnail.EXE.csproj": {}
   },
   "projects": {
-    "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj": {
+    "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj",
-        "projectName": "HDRThumbnail.lib",
-        "projectPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj",
+        "projectUniqueName": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj",
+        "projectName": "HDRThumbnailLib",
+        "projectPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj",
         "packagesPath": "C:\\Users\\rwong\\.nuget\\packages\\",
-        "outputPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\obj\\",
+        "outputPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -22,15 +22,15 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "netstandard2.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -41,9 +41,15 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
             "OpenCvSharp4": {
               "target": "Package",
               "version": "[4.7.0.20230115, )"
@@ -64,11 +70,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
@@ -101,8 +102,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj": {
-                "projectPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnail.lib\\HDRThumbnail.csproj"
+              "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj": {
+                "projectPath": "D:\\Code workshop\\clo\\HDRThumbnail\\HDRThumbnailLib\\HDRThumbnailLib.csproj"
               }
             }
           }
