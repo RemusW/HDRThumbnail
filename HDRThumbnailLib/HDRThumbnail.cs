@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenCvSharp;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace HDRThumbnail
 {
@@ -20,7 +21,7 @@ namespace HDRThumbnail
             }
             if (horizontalFOV > 180 || horizontalFOV < 0)
             {
-                horizontalFOV = 100;
+                throw new ArgumentOutOfRangeException("horizontalFOV");
             }
 
             Mat image = Cv2.ImRead(filePath, ImreadModes.AnyColor | ImreadModes.AnyDepth);
@@ -29,6 +30,7 @@ namespace HDRThumbnail
             if (image.Empty())
             {
                 Console.WriteLine("Failed to load the image.");
+                throw new FileLoadException("Error loading input file");
             }
             else
             {
@@ -51,15 +53,16 @@ namespace HDRThumbnail
 
                 // Create and save perspective projection image
                 Mat thumbnail = hdrToperspective(ldrImage, width, height, horizontalFOV);
-                thumbnail.SaveImage(outputPath);
-                //Cv2.ImShow("perspective", thumbnail);
-
-                Console.WriteLine("Image saved successfully.");
+                bool writeImage = thumbnail.SaveImage(outputPath);
+                if (writeImage)
+                    Console.WriteLine("Image saved successfully to " + outputPath);
+                else
+                    throw new Exception("Failed to write output image");
             }
         }
 
 
-        public static Mat hdrToperspective(Mat equirectangularImage, int width, int height, int horizontalFOV)
+        private static Mat hdrToperspective(Mat equirectangularImage, int width, int height, int horizontalFOV)
         {
             int perspectiveWidth = width;
             int perspectiveHeight = height;
@@ -68,6 +71,7 @@ namespace HDRThumbnail
             float cameraYaw = 0;
             float cameraPitch = 0;
             float cameraRoll = 0;
+
             // Create an empty perspective image
             Mat perspectiveImage = new Mat(perspectiveHeight, perspectiveWidth, MatType.CV_8UC3);
 

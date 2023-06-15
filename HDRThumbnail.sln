@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDRThumbnail.EXE", "HDRThumbnail\HDRThumbnail.EXE.csproj", "{671300E6-D3EA-48E9-B120-DD745D362FA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDRThumbnailLib", "HDRThumbnailLib\HDRThumbnailLib.csproj", "{C2D1B9F2-C4B4-4851-94DB-5F15B8544431}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDRThumbnailLib", "HDRThumbnailLib\HDRThumbnailLib.csproj", "{C2D1B9F2-C4B4-4851-94DB-5F15B8544431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDRThumbnail.Test", "HDRThumbnail.Test\HDRThumbnail.Test.csproj", "{CEFA484F-778D-4141-9C5F-AAE25E1ADD58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C2D1B9F2-C4B4-4851-94DB-5F15B8544431}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2D1B9F2-C4B4-4851-94DB-5F15B8544431}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2D1B9F2-C4B4-4851-94DB-5F15B8544431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEFA484F-778D-4141-9C5F-AAE25E1ADD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEFA484F-778D-4141-9C5F-AAE25E1ADD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEFA484F-778D-4141-9C5F-AAE25E1ADD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEFA484F-778D-4141-9C5F-AAE25E1ADD58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
