@@ -1,6 +1,4 @@
-# HDRThumbnail
-
-HDRThumbnailLib is a package for creating jpg/png thumbnails from hdr files
+This project uses the OpenCVSharp library (https://github.com/shimat/opencvsharp/tree/master) which is under the Apache License 2.0 attached. No moditications are made to it.
 
 ```
 using HDRThumbnail;
@@ -10,5 +8,5 @@ using HDRThumbnail;
 HDRThumbnail.HDRParser.createThumbnail("../input.hdr, "../output.hdr, 1024, 512, 100);
 ```
 
-# Nuget
+# Nuget Package
 https://www.nuget.org/packages/HDRThumbnailLib/1.0.0
