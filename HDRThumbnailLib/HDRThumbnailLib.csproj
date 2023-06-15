@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>HDRThumbnailLib</PackageId>
     <Title>HDR Thumbnail Converter</Title>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

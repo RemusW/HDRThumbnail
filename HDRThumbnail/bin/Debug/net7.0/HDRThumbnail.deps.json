@@ -9,7 +9,7 @@
       "HDRThumbnail/1.0.0": {
         "dependencies": {
           "DevILSharp": "0.2.20",
-          "HDRThumbnailLib": "1.0.0"
+          "HDRThumbnailLib": "1.0.1"
         },
         "runtime": {
           "HDRThumbnail.dll": {}
@@ -113,7 +113,7 @@
       },
       "System.Memory/4.5.4": {},
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "HDRThumbnailLib/1.0.0": {
+      "HDRThumbnailLib/1.0.1": {
         "dependencies": {
           "OpenCvSharp4": "4.7.0.20230115",
           "OpenCvSharp4.runtime.win": "4.7.0.20230115"
@@ -172,7 +172,7 @@
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
     },
-    "HDRThumbnailLib/1.0.0": {
+    "HDRThumbnailLib/1.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
