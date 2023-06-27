@@ -1,3 +1,6 @@
+[Oo]utput/
+*.jpg
+
 # globs
 Makefile.in
 *.userprefs

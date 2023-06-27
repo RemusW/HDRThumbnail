@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Security.Principal;
 using OpenCvSharp;
+using System.Diagnostics;
 
 namespace HDRThumbnail.Test
 {
@@ -82,6 +83,21 @@ namespace HDRThumbnail.Test
             Mat image = Cv2.ImRead(outputPath, ImreadModes.AnyColor | ImreadModes.AnyDepth);
         }
 
+        [TestMethod]
+        public void MeasureTime()
+        {
+            string inputPath = MakeFilePath("hdr", "industrial_sunset_puresky_1k.hdr");
+            string outputPath = MakeFilePath("output", "MeasureTime.png");
+            int iwidth = 1024;
+            int iheight = 512;
+            int hFOV = 100;
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+            HDRParser.createThumbnail(inputPath, outputPath, iwidth, iheight, hFOV);
+            sw.Stop();
+            Console.WriteLine("Total Time: " + sw.Elapsed);
+        }
         private string MakeFilePath(string baseFolderName, string fileName)
         {
             string projectRoot = Directory.GetParent(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)).FullName;

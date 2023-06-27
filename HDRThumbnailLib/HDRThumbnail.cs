@@ -2,6 +2,8 @@
 using OpenCvSharp;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HDRThumbnail
 {
@@ -34,28 +36,16 @@ namespace HDRThumbnail
             }
             else
             {
-                // Gamma correction to fit 8-bit rgb
-                Mat ldrImage = new Mat(image.Height, image.Width, MatType.CV_8UC3);
-
-                for (int y = 0; y < image.Height; y++)
-                {
-                    for (int x = 0; x < image.Width; x++)
-                    {
-                        Vec3b pixel = new Vec3b();
-                        for (int i = 0; i < 3; i++)
-                        {
-                            float color = (float)Math.Pow(image.Get<Vec3f>(y, x)[i], 1.0f / 2.2f);
-                            pixel[i] = (byte)Math.Max(0, Math.Min(255, (color * 255.0)));
-                        }
-                        ldrImage.Set<Vec3b>(y, x, pixel);
-                    }
-                }
-
                 // Create and save perspective projection image
-                Mat thumbnail = hdrToperspective(ldrImage, width, height, horizontalFOV);
+                Mat thumbnail = hdrToperspective(image, width, height, horizontalFOV);
+                thumbnail = toRGB24(thumbnail);
                 bool writeImage = thumbnail.SaveImage(outputPath);
                 if (writeImage)
+                {
                     Console.WriteLine("Image saved successfully to " + outputPath);
+                    //Cv2.ImShow("final", thumbnail);
+                    //Cv2.WaitKey(0);
+                }
                 else
                     throw new Exception("Failed to write output image");
             }
@@ -73,7 +63,7 @@ namespace HDRThumbnail
             float cameraRoll = 0;
 
             // Create an empty perspective image
-            Mat perspectiveImage = new Mat(perspectiveHeight, perspectiveWidth, MatType.CV_8UC3);
+            Mat perspectiveImage = new Mat(perspectiveHeight, perspectiveWidth, equirectangularImage.Type());
 
             // Convert field of view to radians
             float hFovRadians = fieldOfView * (float)Math.PI / 180.0f;
@@ -102,7 +92,7 @@ namespace HDRThumbnail
                     float zCartesian = (float)(Math.Cos(elevation) * Math.Cos(azimuth));
 
                     // Apply camera rotations
-                    RotatePoint(ref xCartesian, ref yCartesian, ref zCartesian, cameraYaw, cameraPitch, cameraRoll);
+                    //RotatePoint(ref xCartesian, ref yCartesian, ref zCartesian, cameraYaw, cameraPitch, cameraRoll);
 
                     // Convert Cartesian coordinates to longitude and latitude angles
                     float longitude = (float)Math.Atan2(xCartesian, zCartesian);
@@ -113,14 +103,12 @@ namespace HDRThumbnail
                     int equirectangularY = (int)((latitude + Math.PI / 2.0f) / Math.PI * equirectangularImage.Height);
 
                     // Retrieve pixel value from equirectangular image
-                    Vec3b pixel = equirectangularImage.Get<Vec3b>(equirectangularY, equirectangularX);
+                    Vec3f pixel = equirectangularImage.Get<Vec3f>(equirectangularY, equirectangularX);
 
                     // Assign pixel value to perspective image
-                    perspectiveImage.Set<Vec3b>(y, x, pixel);
+                    perspectiveImage.Set<Vec3f>(y, x, pixel);
                 }
             }
-
-
             return perspectiveImage;
         }
 
@@ -151,6 +139,27 @@ namespace HDRThumbnail
             tempX = x;
             x = cosRoll * tempX - sinRoll * y;
             y = sinRoll * tempX + cosRoll * y;
+        }
+
+        private static Mat toRGB24(Mat image)
+        {
+            // Gamma correction to fit 8-bit rgb
+            Mat ldrImage = new Mat(image.Height, image.Width, MatType.CV_8UC3);
+
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    Vec3b pixel = new Vec3b();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        float color = (float)Math.Pow(image.Get<Vec3f>(y, x)[i], 1.0f / 2.2f);
+                        pixel[i] = (byte)Math.Max(0, Math.Min(255, (color * 255.0)));
+                    }
+                    ldrImage.Set<Vec3b>(y, x, pixel);
+                }
+            }
+            return ldrImage;
         }
     }
 }
