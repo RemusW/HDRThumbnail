@@ -1,5 +1,7 @@
 # HDRThumbnail
 
+This project uses the OpenCVSharp library (https://github.com/shimat/opencvsharp/tree/master) which is under the Apache License 2.0 attached. No moditications are made to it.
+
 HDRThumbnailLib is a package for creating jpeg/png thumbnails from hdr files
 
 ```
