@@ -1,6 +1,6 @@
 # HDRThumbnail
 
-HDRThumbnailLib is a package for creating jpg/png thumbnails from hdr files
+HDRThumbnailLib is a package for creating jpeg/png thumbnails from hdr files
 
 ```
 using HDRThumbnail;
